@@ -57,96 +57,99 @@ const TradingPositionCalculator = () => {
   const results = calculateResults();
 
   return (
-    <div className="p-4 max-w-md mx-auto">
-      <Card className="mb-4">
-        <CardHeader>
-          <CardTitle>Account Settings</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="mb-4">
-            <Label htmlFor="accountBalance">Account Balance ($)</Label>
-            <Input
-              id="accountBalance"
-              type="number"
-              value={accountBalance}
-              onChange={(e) => setAccountBalance(e.target.value)}
-              placeholder="Enter account balance"
-            />
-          </div>
-          <div className="mb-4">
-            <Label>Max Risk (%): {maxRiskPercentage.toFixed(3)}%</Label>
-            <Slider
-              value={[maxRiskPercentage]}
-              onValueChange={(value) => setMaxRiskPercentage(value[0])}
-              min={0.125}
-              max={5}
-              step={0.125}
-              className="mt-2"
-            />
-          </div>
-          <div className="mb-4">
-            <Label>Select Index</Label>
-            <RadioGroup value={selectedIndex} onValueChange={setSelectedIndex} className="mt-2">
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="ES" id="ES" />
-                <Label htmlFor="ES">$ES</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="NQ" id="NQ" />
-                <Label htmlFor="NQ">$NQ</Label>
-              </div>
-            </RadioGroup>
-          </div>
-          <div className="flex items-center space-x-2">
-            <Switch
-              id="micro-mode"
-              checked={isMicro}
-              onCheckedChange={setIsMicro}
-            />
-            <Label htmlFor="micro-mode">Micro Contracts</Label>
-          </div>
-        </CardContent>
-      </Card>
+    <div className="p-4 max-w-4xl mx-auto">
+      <div className="flex flex-col md:flex-row md:space-x-4 mb-4">
+        <Card className="flex-1 mb-4 md:mb-0">
+          <CardHeader>
+            <CardTitle>Account Settings</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="mb-4">
+              <Label htmlFor="accountBalance">Account Balance ($)</Label>
+              <Input
+                id="accountBalance"
+                type="number"
+                value={accountBalance}
+                onChange={(e) => setAccountBalance(e.target.value)}
+                placeholder="Enter account balance"
+              />
+            </div>
+            <div className="mb-4">
+              <Label>Max Risk (%): {maxRiskPercentage.toFixed(3)}%</Label>
+              <Slider
+                value={[maxRiskPercentage]}
+                onValueChange={(value) => setMaxRiskPercentage(value[0])}
+                min={0.125}
+                max={5}
+                step={0.125}
+                className="mt-2"
+              />
+            </div>
+            <div className="mb-4">
+              <Label>Select Index</Label>
+              <RadioGroup value={selectedIndex} onValueChange={setSelectedIndex} className="mt-2">
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="ES" id="ES" />
+                  <Label htmlFor="ES">$ES</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="NQ" id="NQ" />
+                  <Label htmlFor="NQ">$NQ</Label>
+                </div>
+              </RadioGroup>
+            </div>
+            <div className="flex items-center space-x-2">
+              <Switch
+                id="micro-mode"
+                checked={isMicro}
+                onCheckedChange={setIsMicro}
+                className="bg-gray-200 data-[state=checked]:bg-blue-500"
+              />
+              <Label htmlFor="micro-mode">Micro Contracts</Label>
+            </div>
+          </CardContent>
+        </Card>
 
-      <Card className="mb-4">
-        <CardHeader>
-          <CardTitle>Trade Parameters</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="mb-4">
-            <Label htmlFor="entry">Entry</Label>
-            <Input
-              id="entry"
-              type="number"
-              value={entry}
-              onChange={(e) => setEntry(e.target.value)}
-              placeholder="Enter entry price"
-            />
-          </div>
-          <div className="mb-4">
-            <Label htmlFor="stopLoss">Stop Loss</Label>
-            <Input
-              id="stopLoss"
-              type="number"
-              value={stopLoss}
-              onChange={(e) => setStopLoss(e.target.value)}
-              placeholder="Enter stop loss price"
-            />
-          </div>
-          <div>
-            <Label htmlFor="takeProfit">Take Profit (Optional)</Label>
-            <Input
-              id="takeProfit"
-              type="number"
-              value={takeProfit}
-              onChange={(e) => setTakeProfit(e.target.value)}
-              placeholder="Enter take profit price"
-            />
-          </div>
-        </CardContent>
-      </Card>
+        <Card className="flex-1">
+          <CardHeader>
+            <CardTitle>Trade Parameters</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="mb-4">
+              <Label htmlFor="entry">Entry</Label>
+              <Input
+                id="entry"
+                type="number"
+                value={entry}
+                onChange={(e) => setEntry(e.target.value)}
+                placeholder="Enter entry price"
+              />
+            </div>
+            <div className="mb-4">
+              <Label htmlFor="stopLoss">Stop Loss</Label>
+              <Input
+                id="stopLoss"
+                type="number"
+                value={stopLoss}
+                onChange={(e) => setStopLoss(e.target.value)}
+                placeholder="Enter stop loss price"
+              />
+            </div>
+            <div>
+              <Label htmlFor="takeProfit">Take Profit (Optional)</Label>
+              <Input
+                id="takeProfit"
+                type="number"
+                value={takeProfit}
+                onChange={(e) => setTakeProfit(e.target.value)}
+                placeholder="Enter take profit price"
+              />
+            </div>
+          </CardContent>
+        </Card>
+      </div>
 
-      <Card>
+      <Card className="w-full md:w-2/3 mx-auto">
         <CardHeader>
           <CardTitle>Calculation Results</CardTitle>
         </CardHeader>
