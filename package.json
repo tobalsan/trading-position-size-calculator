@@ -1,7 +1,7 @@
 {
   "name": "trading-position-size",
   "version": "0.1.0",
-  "homepage": "https://tobalsan.github.io/tobalsan/trading-position-size-calculator",
+  "homepage": "https://tobalsan.github.io/trading-position-size-calculator",
   "private": true,
   "dependencies": {
     "@craco/craco": "^7.1.0",
