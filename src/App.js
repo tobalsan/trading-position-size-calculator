@@ -6,6 +6,7 @@ import { Input } from "./components/ui/input"
 import { Slider } from "./components/ui/slider"
 import { Switch } from "./components/ui/switch"
 import { Card, CardHeader, CardContent, CardTitle } from "./components/ui/card"
+import { BarChart2, DollarSign, Percent } from "lucide-react"
 
 const TradingPositionCalculator = () => {
   const [accountBalance, setAccountBalance] = useState(localStorage.getItem('accountBalance') || '');
@@ -55,6 +56,14 @@ const TradingPositionCalculator = () => {
   };
 
   const results = calculateResults();
+
+  const ResultItem = ({ icon: Icon, label, value }) => (
+    <div className="flex flex-col items-center">
+      <Icon size={48} className="mb-2 text-blue-500" />
+      <span className="text-sm text-gray-600">{label}</span>
+      <span className="text-xl font-bold">{value}</span>
+    </div>
+  );
 
   return (
     <div className="p-4 max-w-4xl mx-auto">
@@ -155,13 +164,27 @@ const TradingPositionCalculator = () => {
         </CardHeader>
         <CardContent>
           {results ? (
-            <>
-              <p>Max Contracts: {results.maxContracts}</p>
-              <p>Risk Amount: ${results.riskAmount}</p>
-              {results.rr && <p>Risk/Reward Ratio: {results.rr}</p>}
-            </>
+            <div className="flex justify-around">
+              <ResultItem
+                icon={BarChart2}
+                label="Max Contracts"
+                value={results.maxContracts}
+              />
+              <ResultItem
+                icon={DollarSign}
+                label="Risk Amount"
+                value={`$${results.riskAmount}`}
+              />
+              {results.rr && (
+                <ResultItem
+                  icon={Percent}
+                  label="Risk/Reward Ratio"
+                  value={results.rr}
+                />
+              )}
+            </div>
           ) : (
-            <p>Please fill in the required fields to see results.</p>
+            <p className="text-center">Please fill in the required fields to see results.</p>
           )}
         </CardContent>
       </Card>
