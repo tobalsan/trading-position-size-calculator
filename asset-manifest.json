@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/tobalsan/trading-position-size-calculator/static/css/main.0d2ad717.css",
+    "main.js": "/tobalsan/trading-position-size-calculator/static/js/main.c9d0ee7a.js",
+    "static/js/453.73935d83.chunk.js": "/tobalsan/trading-position-size-calculator/static/js/453.73935d83.chunk.js",
+    "index.html": "/tobalsan/trading-position-size-calculator/index.html",
+    "main.0d2ad717.css.map": "/tobalsan/trading-position-size-calculator/static/css/main.0d2ad717.css.map",
+    "main.c9d0ee7a.js.map": "/tobalsan/trading-position-size-calculator/static/js/main.c9d0ee7a.js.map",
+    "453.73935d83.chunk.js.map": "/tobalsan/trading-position-size-calculator/static/js/453.73935d83.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0d2ad717.css",
+    "static/js/main.c9d0ee7a.js"
+  ]
+}
