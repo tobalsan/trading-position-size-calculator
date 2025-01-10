@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/trading-position-size-calculator/static/css/main.0d2ad717.css",
-    "main.js": "/trading-position-size-calculator/static/js/main.3abe7e2e.js",
+    "main.css": "/trading-position-size-calculator/static/css/main.264ac759.css",
+    "main.js": "/trading-position-size-calculator/static/js/main.7ba491f6.js",
     "static/js/453.73935d83.chunk.js": "/trading-position-size-calculator/static/js/453.73935d83.chunk.js",
     "index.html": "/trading-position-size-calculator/index.html",
-    "main.0d2ad717.css.map": "/trading-position-size-calculator/static/css/main.0d2ad717.css.map",
-    "main.3abe7e2e.js.map": "/trading-position-size-calculator/static/js/main.3abe7e2e.js.map",
+    "main.264ac759.css.map": "/trading-position-size-calculator/static/css/main.264ac759.css.map",
+    "main.7ba491f6.js.map": "/trading-position-size-calculator/static/js/main.7ba491f6.js.map",
     "453.73935d83.chunk.js.map": "/trading-position-size-calculator/static/js/453.73935d83.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.0d2ad717.css",
-    "static/js/main.3abe7e2e.js"
+    "static/css/main.264ac759.css",
+    "static/js/main.7ba491f6.js"
   ]
 }
