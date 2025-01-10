@@ -1,31 +1,51 @@
-import React, { useState, useEffect } from 'react';
-import './App.css';
-import { RadioGroup, RadioGroupItem } from "./components/ui/radio-group"
-import { Label } from "./components/ui/label"
-import { Input } from "./components/ui/input"
-import { Slider } from "./components/ui/slider"
-import { Switch } from "./components/ui/switch"
-import { Card, CardHeader, CardContent, CardTitle } from "./components/ui/card"
-import { BarChart2, DollarSign, Percent } from "lucide-react"
+import React, { useState, useEffect } from "react";
+import "./App.css";
+import { RadioGroup, RadioGroupItem } from "./components/ui/radio-group";
+import { Label } from "./components/ui/label";
+import { Input } from "./components/ui/input";
+import { Slider } from "./components/ui/slider";
+import { Switch } from "./components/ui/switch";
+import { Card, CardHeader, CardContent, CardTitle } from "./components/ui/card";
+import { BarChart2, DollarSign, Percent } from "lucide-react";
 
 const TradingPositionCalculator = () => {
-  const [accountBalance, setAccountBalance] = useState(localStorage.getItem('accountBalance') || '');
-  const [maxRiskPercentage, setMaxRiskPercentage] = useState(parseFloat(localStorage.getItem('maxRiskPercentage')) || 0.125);
-  const [selectedIndex, setSelectedIndex] = useState(localStorage.getItem('selectedIndex') || 'ES');
-  const [isMicro, setIsMicro] = useState(localStorage.getItem('isMicro') === 'true');
-  const [entry, setEntry] = useState(localStorage.getItem('entry') || '');
-  const [stopLoss, setStopLoss] = useState(localStorage.getItem('stopLoss') || '');
-  const [takeProfit, setTakeProfit] = useState(localStorage.getItem('takeProfit') || '');
+  const [accountBalance, setAccountBalance] = useState(
+    localStorage.getItem("accountBalance") || "",
+  );
+  const [maxRiskPercentage, setMaxRiskPercentage] = useState(
+    parseFloat(localStorage.getItem("maxRiskPercentage")) || 0.125,
+  );
+  const [selectedIndex, setSelectedIndex] = useState(
+    localStorage.getItem("selectedIndex") || "ES",
+  );
+  const [isMicro, setIsMicro] = useState(
+    localStorage.getItem("isMicro") === "true",
+  );
+  const [entry, setEntry] = useState(localStorage.getItem("entry") || "");
+  const [stopLoss, setStopLoss] = useState(
+    localStorage.getItem("stopLoss") || "",
+  );
+  const [takeProfit, setTakeProfit] = useState(
+    localStorage.getItem("takeProfit") || "",
+  );
 
   useEffect(() => {
-    localStorage.setItem('accountBalance', accountBalance);
-    localStorage.setItem('maxRiskPercentage', maxRiskPercentage);
-    localStorage.setItem('selectedIndex', selectedIndex);
-    localStorage.setItem('isMicro', isMicro);
-    localStorage.setItem('entry', entry);
-    localStorage.setItem('stopLoss', stopLoss);
-    localStorage.setItem('takeProfit', takeProfit);
-  }, [accountBalance, maxRiskPercentage, selectedIndex, isMicro, entry, stopLoss, takeProfit]);
+    localStorage.setItem("accountBalance", accountBalance);
+    localStorage.setItem("maxRiskPercentage", maxRiskPercentage);
+    localStorage.setItem("selectedIndex", selectedIndex);
+    localStorage.setItem("isMicro", isMicro);
+    localStorage.setItem("entry", entry);
+    localStorage.setItem("stopLoss", stopLoss);
+    localStorage.setItem("takeProfit", takeProfit);
+  }, [
+    accountBalance,
+    maxRiskPercentage,
+    selectedIndex,
+    isMicro,
+    entry,
+    stopLoss,
+    takeProfit,
+  ]);
 
   const calculateResults = () => {
     if (!accountBalance || !entry || !stopLoss) return null;
@@ -35,7 +55,11 @@ const TradingPositionCalculator = () => {
     const stopLossPrice = parseFloat(stopLoss);
     const takeProfitPrice = takeProfit ? parseFloat(takeProfit) : null;
 
-    const pointValue = selectedIndex === 'ES' ? (isMicro ? 5 : 50) : (isMicro ? 2 : 20);
+    let pointValue = 1; // Default for Non-index
+    if (selectedIndex !== "Non-index") {
+      pointValue =
+        selectedIndex === "ES" ? (isMicro ? 5 : 50) : isMicro ? 2 : 20;
+    }
     const riskPerPoint = Math.abs(entryPrice - stopLossPrice) * pointValue;
     const maxRiskAmount = balance * (maxRiskPercentage / 100);
 
@@ -45,11 +69,18 @@ const TradingPositionCalculator = () => {
     const actualRiskAmount = riskPerPoint * maxContracts;
 
     if (actualRiskAmount > maxRiskAmount && maxContracts === 1) {
-      return { maxContracts: "Too much risk", riskAmount: actualRiskAmount.toFixed(2), rr: null };
+      return {
+        maxContracts: "Too much risk",
+        riskAmount: actualRiskAmount.toFixed(2),
+        rr: null,
+      };
     }
 
     const rr = takeProfitPrice
-      ? ((Math.abs(takeProfitPrice - entryPrice) * pointValue * maxContracts) / actualRiskAmount).toFixed(2)
+      ? (
+          (Math.abs(takeProfitPrice - entryPrice) * pointValue * maxContracts) /
+          actualRiskAmount
+        ).toFixed(2)
       : null;
 
     return { maxContracts, riskAmount: actualRiskAmount.toFixed(2), rr };
@@ -96,7 +127,16 @@ const TradingPositionCalculator = () => {
             </div>
             <div className="mb-4">
               <Label>Select Index</Label>
-              <RadioGroup value={selectedIndex} onValueChange={setSelectedIndex} className="mt-2">
+              <RadioGroup
+                value={selectedIndex}
+                onValueChange={(value) => {
+                  setSelectedIndex(value);
+                  if (value === "Non-index") {
+                    setIsMicro(false);
+                  }
+                }}
+                className="mt-2"
+              >
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="ES" id="ES" />
                   <Label htmlFor="ES">$ES</Label>
@@ -105,6 +145,10 @@ const TradingPositionCalculator = () => {
                   <RadioGroupItem value="NQ" id="NQ" />
                   <Label htmlFor="NQ">$NQ</Label>
                 </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="Non-index" id="Non-index" />
+                  <Label htmlFor="Non-index">Non-index</Label>
+                </div>
               </RadioGroup>
             </div>
             <div className="flex items-center space-x-2">
@@ -112,9 +156,15 @@ const TradingPositionCalculator = () => {
                 id="micro-mode"
                 checked={isMicro}
                 onCheckedChange={setIsMicro}
-                className="bg-gray-200 data-[state=checked]:bg-blue-500"
+                disabled={selectedIndex === 'Non-index'}
+                className="bg-gray-300 data-[state=checked]:bg-blue-600 disabled:opacity-50 border-gray-400 [&>span]:bg-white"
               />
-              <Label htmlFor="micro-mode">Micro Contracts</Label>
+              <Label
+                htmlFor="micro-mode"
+                className={selectedIndex === "Non-index" ? "opacity-50" : ""}
+              >
+                Micro Contracts
+              </Label>
             </div>
           </CardContent>
         </Card>
@@ -184,7 +234,9 @@ const TradingPositionCalculator = () => {
               )}
             </div>
           ) : (
-            <p className="text-center">Please fill in the required fields to see results.</p>
+            <p className="text-center">
+              Please fill in the required fields to see results.
+            </p>
           )}
         </CardContent>
       </Card>
